@@ -72,6 +72,10 @@
     
     <div class="row">
         <div class="col-sm-12 mt-2">
+            @if(Auth::check() && Auth::user()->role == "Admin")
+            {{-- @if($roles->isNotEmpty()) --}}
+
+            
             <div class="card shadow mb-4">
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">Roles</h6>
@@ -112,9 +116,7 @@
                                     @endif
                                 >Attach</button>
                             </form>
-                        </td>
-                            
-                            
+                        </td>            
                            <td>
                             <form method="post" action="{{ route('user.role.detach', $user) }}">
                             @method('PUT')
@@ -127,10 +129,7 @@
                                 @endif
                             >Detach</button>
                         </form>   
-                        </td>
-
-                            
-                           
+                        </td>       
                         </tr>
                       @endforeach
                   </tbody>
@@ -139,7 +138,7 @@
               </div>
             </div>
           </div>
-
+          @endif
         </div>
     </div>
 

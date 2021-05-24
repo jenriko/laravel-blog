@@ -34,7 +34,7 @@ class UserController extends Controller
         // 'password' => ['sometimes', 'nullable', 'min:6', 'max:25', 'confirmed']
         
     ]);
-
+  
         if (request('avatar')) {
             \Storage::delete($user->avatar);
             $inputs['avatar'] = request('avatar')->store('images');

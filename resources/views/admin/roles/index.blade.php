@@ -1,6 +1,18 @@
 <x-admin-master>
     @section('content')
+    <div class="row">
+        @if (session()->has('role-delete'))
+          <div class="div alert alert-danger">
+              {{ session('role-delete') }}
+          </div>
+    @endif
     
+    @if(session()->has('role-update'))
+        <div class="alert alert-success">
+            {{ session('role-update') }}
+        </div> 
+    @endif
+    </div>
     <div class="row">
         <div class="col-sm-3">
             <form method="post" action="{{ route('roles.store') }}">
@@ -30,18 +42,23 @@
                       <th>id</th>
                       <th>Name</th>
                       <th>Slug</th>
-                      <th>Created At</th>
-                      <th>Updated At</th>
+                      <th>Delete</th>
+                      
                       </tr>
                   </thead>
                   <tbody>
                       @foreach($roles as $role)
                         <tr>
                            <td>{{ $role->id }}</td>
-                           <td>{{ $role->name }}</td>
+                           <td><a href="{{ route('roles.edit',$role->id) }}">{{ $role->name }}</a></td>
                            <td>{{ $role->slug }}</td>
-                           <td>{{ $role->created_at }}</td>
-                           <td>{{ $role->updated_at }}</td>
+                           <td>
+                             <form method="POST" action="{{ route('roles.destroy', $role->id) }}">
+                               @csrf
+                               @method('DELETE')
+                               <button class="btn btn-danger">Delete</button>
+                             </form>
+                           </td>
                           
                         </tr>
                       @endforeach
@@ -51,10 +68,7 @@
               </div>
             </div>
           </div>
-
         </div>
-
     </div>
-
     @endsection
 </x-admin-master>
